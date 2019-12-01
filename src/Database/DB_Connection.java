@@ -12,7 +12,7 @@ public class DB_Connection {
 
     public DB_Connection() throws SQLException {
 
-        String url = "jdbc:mysql://localhost:3306/mohaabdev_bilet";
+        String url = "jdbc:mysql://107.161.181.220/mohaabdev_bilet";
 
 
         try {
