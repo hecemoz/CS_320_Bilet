@@ -16,6 +16,7 @@ public class main {
         instantiateJDBC();
         try {
             connection = new DB_Connection();
+            connection.send_query("id", "name", "lastname");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

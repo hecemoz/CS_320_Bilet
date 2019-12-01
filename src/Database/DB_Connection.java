@@ -5,43 +5,60 @@ import java.sql.*;
 public class DB_Connection {
 
     private static Connection conn;
-    private static Statement mystmt;
-    static final String USER = "mohaabdev";
-    static final String PASS = "null";
+    private static Statement stmt;
+    static final String USER = "sql7313897";
+    static final String PASS = "vAC2v1qeAK";
 
 
     public DB_Connection() throws SQLException {
 
-        String url = "jdbc:mysql://107.161.181.220/mohaabdev_bilet";
+        String url = "jdbc:mysql://sql7.freesqldatabase.com:3306/sql7313897";
 
 
-        try {
-
-            conn = DriverManager.getConnection(url, USER, PASS);
-            System.out.println("Database connection established");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                close();
-            }
-        }
+        conn = DriverManager.getConnection(url, USER, PASS);
+        System.out.println("Database connection established");
 
 
     }
 
-    public static void send_query(String... s) {
+    public ResultSet send_query(String... s) {
+
+        ResultSet rs = null;
+        stmt = null;
 
         try {
-            mystmt = conn.createStatement();
-            ResultSet myRs = mystmt.executeQuery("SELECT * FROM users");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM users");
 
-            while (myRs.next()) {
-                System.out.println(myRs.getString(s[0]) + "." + myRs.getString(s[1]));
+            while (rs.next()) {
+                System.out.println(rs.getString(s[0]) + " - " + rs.getString(s[1]) + " " + rs.getString(s[2]));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+
+
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) {
+                }
+
+                rs = null;
+            }
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                }
+
+                stmt = null;
+            }
         }
+        return rs;
     }
 
     public static void close() {
