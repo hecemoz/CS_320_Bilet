@@ -16,7 +16,7 @@ public interface Account {
 
     void setPassword(String s);
 
-    void setEmail();
+    void setEmail(String s);
 
 
 }
