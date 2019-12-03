@@ -8,15 +8,15 @@ public interface Account {
 
     String getPassword();
 
-    void setName();
+    String getEmail();
 
-    void setLastname();
+    void setName(String s);
 
-    void setPassword();
+    void setLastname(String s);
 
-    void getEmail();
+    void setPassword(String s);
 
-    String setEmail();
+    void setEmail();
 
 
 }
