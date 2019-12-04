@@ -1,5 +1,7 @@
 
 import Database.DB_Connection;
+import GUI.loginPage;
+import GUI.registerPage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +15,14 @@ public class main {
 
     public static void main(String[] args) {
 
+
         instantiateJDBC();
         try {
             connection = new DB_Connection();
-            connection.send_query("id", "name", "lastname");
+            System.out.println("Current Users: ");
+            connection.send_query("users", "user_id", "name", "surname", "email", "password");
+            System.out.println("Current Organizers: ");
+            connection.send_query("organizers", "organizer_id", "name", "surname", "email", "password");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -73,8 +79,8 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String sl = bg.getSelection().getActionCommand();
-                System.out.println(sl);
-//                loginPage login = new loginPage(bg.getSelection());
+//                System.out.println(sl);
+                loginPage login = new loginPage(sl);
             }
         });
 
@@ -83,8 +89,8 @@ public class main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String se = bg.getSelection().getActionCommand();
-                System.out.println(se);
-//                registerPage reg = new registerPage(bg.getSelection().toString());
+//                System.out.println(se);
+                registerPage reg = new registerPage(se);
             }
         });
 

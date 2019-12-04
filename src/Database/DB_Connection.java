@@ -21,17 +21,18 @@ public class DB_Connection {
 
     }
 
-    public ResultSet send_query(String... s) {
+    public ResultSet send_query(String a, String... s) {
 
         ResultSet rs = null;
         stmt = null;
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM users");
+            rs = stmt.executeQuery("SELECT * FROM " + a);
 
             while (rs.next()) {
-                System.out.println(rs.getString(s[0]) + " - " + rs.getString(s[1]) + " " + rs.getString(s[2]));
+                System.out.println(rs.getString(s[0]) + " - " + rs.getString(s[1]) + " " + rs.getString(s[2]) + " " + rs.getString(s[3])
+                        + " " + rs.getString(s[4]));
             }
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
@@ -59,6 +60,35 @@ public class DB_Connection {
             }
         }
         return rs;
+    }
+
+    public void insertData(String query) {
+
+        try {
+            stmt = conn.createStatement();
+
+            conn.setAutoCommit(false);
+
+            stmt.executeUpdate(query);
+
+            conn.commit();
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } finally {
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+
+                stmt = null;
+            }
+        }
     }
 
     public static void close() {
